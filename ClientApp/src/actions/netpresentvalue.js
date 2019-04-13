@@ -18,8 +18,8 @@ export const getAll = () => {
 
 export const byId = (id) => {
 	return async (dispatch, getState) => {
-		dispatch({ type: "REQUEST_ALL" });
+		dispatch({ type: "REQUEST_SINGLE" });
 		var items = await byIdService(id);
-		dispatch({ type: "DONE_REQUEST_ALL", payload: items });
+		dispatch({ type: "DONE_REQUEST_SINGLE", payload: items });
 	}
 }

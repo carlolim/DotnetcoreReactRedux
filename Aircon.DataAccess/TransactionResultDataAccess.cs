@@ -21,7 +21,8 @@ namespace Aircon.DataAccess
         {
             using (IDbConnection db = new SqlConnection(ConnectionString))
             {
-                SqlParameter parameter = new SqlParameter("@Id", id);
+                DynamicParameters parameter = new DynamicParameters();
+                parameter.Add("@Id", id);
                 return await db.QueryAsync<TransactionResult>(
                     "SELECT * FROM [TransactionResult] WHERE TransactionInputId = @Id", parameter);
             }

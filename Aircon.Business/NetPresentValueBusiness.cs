@@ -75,7 +75,8 @@ namespace Aircon.Business
                                 Amount = m.Amount,
                                 Period = m.Period,
                                 TransactionResultId = transResultInsertResult.Id,
-                                Value = m.Value
+                                Value = m.Value,
+                                TransactionInputId = transactionInputInsertResult.Id
                             }));
                         }
 
@@ -100,9 +101,19 @@ namespace Aircon.Business
             return result;
         }
 
-        public async Task<IEnumerable<TransactionInput>> All()
+        public async Task<IEnumerable<TransactionInputDto>> All()
         {
-            return await _dbContext.TransactionInputDataAccess.All();
+            var all = await _dbContext.TransactionInputDataAccess.All();
+            return all.Select(m => new TransactionInputDto
+            {
+                TransactionInputId = m.TransactionInputId,
+                Amount = m.Amount,
+                DateAdded = m.DateAdded,
+                DateAddedStr = m.DateAdded.ToString("MMM. dd, yyyy hh:mmtt"),
+                DiscountRate = m.DiscountRate,
+                LowerBoundDiscount = m.LowerBoundDiscount,
+                UpperBoundDiscount = m.UpperBoundDiscount
+            });
         }
 
         public async Task<TransactionDetailsDto> DetailsById(int transactionId)

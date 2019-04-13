@@ -10,9 +10,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case 'REQUEST_ALL':
+        case 'REQUEST_SINGLE':
             return { ...state, isLoading: true };
-        case 'DONE_REQUEST_ALL':
+        case 'DONE_REQUEST_SINGLE':
             return { ...state, ...action.payload, isLoading: false };
         default:
             return state

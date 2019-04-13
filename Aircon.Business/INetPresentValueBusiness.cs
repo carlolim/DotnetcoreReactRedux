@@ -10,7 +10,7 @@ namespace Aircon.Business
     {
         Task<Result> Add(NpvCalculateParameter data);
         IEnumerable<TransactionResultDto> Calculate(NpvCalculateParameter data);
-        Task<IEnumerable<TransactionInput>> All();
+        Task<IEnumerable<TransactionInputDto>> All();
         Task<TransactionDetailsDto> DetailsById(int transactionId);
     }
 }
