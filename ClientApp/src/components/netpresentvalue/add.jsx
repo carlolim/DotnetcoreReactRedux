@@ -73,18 +73,15 @@ class Add extends Component {
     compute = async () => {
         let errors = validate(this.state);
         this.setState({ errors });
+        console.log(this.props.result.isSuccess);
         if (!errors.hasError) {
-            var result = await this.props.save({
+            await this.props.save({
                 lowerBoundDiscount: this.state.lowerBoundDiscount,
                 upperBoundDiscount: this.state.upperBoundDiscount,
                 discountIncrement: this.state.discountIncrement,
                 amount: this.state.amount,
                 cashFlows: this.state.cashFlows.map((c, index) => {return { period: index + 1, amount: c.amount}})
             });
-            if(result.isSuccess){
-                this.props.history.push(`/details/${result.id}`)
-            }
-
         }
     }
 
@@ -165,7 +162,7 @@ class Add extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { ...state.allNetPresentValueReducer };
+    return { ...state.addNetPresentValueReducer };
 }
 
 const mapDispatchToProps = (dispatch) => {

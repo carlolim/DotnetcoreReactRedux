@@ -4,7 +4,10 @@ export const save = (data) => {
 	return async (dispatch, getState) => {
 		dispatch({ type: "REQUEST_ADD" });
 		var result = await addService(data);
-		dispatch({ type: "DONE_REQUEST_ADD", payload: result });
+		if (result.isSuccess) {
+			window.location.href = `/details/${result.id}`;
+		}
+		return dispatch({ type: "DONE_REQUEST_ADD", payload: result });
 	}
 }
 

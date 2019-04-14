@@ -42,11 +42,6 @@ namespace Aircon.Business
                     LowerBoundDiscount = data.LowerBoundDiscount,
                     DateAdded = DateTime.Now
                 };
-                var transactionResult = calculateResult.Select(m => new TransactionResult
-                {
-                    NetPresentValue = m.NetPresentValue,
-                    DiscountRate = m.DiscountRate
-                }).ToList();
                 #endregion
 
                 using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -90,6 +85,7 @@ namespace Aircon.Business
 
                         transactionScope.Complete();
                         result.IsSuccess = true;
+                        result.Id = transactionInputInsertResult.Id;
                     }
                     catch (Exception ex) //TODO: logger
                     {
@@ -104,7 +100,7 @@ namespace Aircon.Business
         public async Task<IEnumerable<TransactionInputDto>> All()
         {
             var all = await _dbContext.TransactionInputDataAccess.All();
-            return all.Select(m => new TransactionInputDto
+            return all.OrderByDescending(m => m.DateAdded).Select(m => new TransactionInputDto
             {
                 TransactionInputId = m.TransactionInputId,
                 Amount = m.Amount,
